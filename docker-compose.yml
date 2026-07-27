@@ -1,0 +1,33 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-weather}
+      POSTGRES_USER: ${POSTGRES_USER:-weather}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-weather}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-weather} -d ${POSTGRES_DB:-weather}"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  etl:
+    build: .
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://weather:weather@postgres:5432/weather}
+      SOURCE_MODE: ${SOURCE_MODE:-sample}
+      LOCATION_NAME: ${LOCATION_NAME:-Athens}
+      LATITUDE: ${LATITUDE:-37.9838}
+      LONGITUDE: ${LONGITUDE:-23.7275}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["run"]
+
+volumes:
+  postgres_data:
