@@ -1,6 +1,6 @@
 # Athens Weather ETL
 
-A compact, interview-ready ETL project that extracts hourly weather data for Athens,
+A compact ETL project that extracts hourly weather data for Athens,
 validates and transforms it in Python, and loads it into PostgreSQL with idempotent
 upserts.
 
@@ -103,15 +103,6 @@ processed rows, timestamps and an error message when a run fails.
 └── pyproject.toml
 ```
 
-## How to explain it in an interview
-
-> I built a small ETL pipeline around a public weather API. The extract layer can use
-> the live API, but I also added a deterministic local sample so demos and tests do not
-> depend on the network. The transformation layer validates schema shape and business
-> rules. The load is transactional and idempotent through a PostgreSQL composite key
-> and an upsert. I also added an audit table, container health checks, unit tests and a
-> CI workflow because my strongest background is operating reliable data workloads.
-
 ## Design decisions and trade-offs
 
 - **Why PostgreSQL?** It makes SQL, constraints, indexing, transactions and upserts
@@ -120,7 +111,7 @@ processed rows, timestamps and an error message when a run fails.
   demonstration. In production, this command could be scheduled by Airflow, Kubernetes
   CronJob, GitHub Actions or another orchestrator.
 - **Why sample plus live mode?** The live mode proves integration; the sample mode makes
-  interviews and CI deterministic.
+  demos and CI deterministic.
 - **What would be next?** Incremental historical ingestion, staging tables, retries with
   exponential backoff, metrics, secrets management and deployment to Kubernetes.
 

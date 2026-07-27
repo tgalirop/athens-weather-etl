@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "athens-weather-etl"
 version = "0.1.0"
-description = "Interview-ready ETL pipeline: Open-Meteo to PostgreSQL"
+description = "ETL pipeline: Open-Meteo to PostgreSQL"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
