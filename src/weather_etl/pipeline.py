@@ -12,7 +12,7 @@ from weather_etl.extract import extract_live, extract_sample
 from weather_etl.transform import transform
 
 LOGGER = logging.getLogger(__name__)
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PROJECT_ROOT = Path.cwd()
 
 
 def run_pipeline(settings: Settings) -> int:
